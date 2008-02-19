@@ -44,7 +44,7 @@ our $VERSION = '0.02';
 
     sub accgen {
         my $n = shift;
-        return sub { $n += shift }
+        return sub { $n += shift || 1 }
     }
 
     my $from_3 = accgen(3);
