@@ -5,9 +5,12 @@ use inc::Module::Install;
 name           'autobox-Closure-Attributes';
 all_from       'lib/autobox/Closure/Attributes.pm';
 
-requires       '';
+requires       'parent';
+requires       'autobox';
+requires       'PadWalker';
 
 build_requires 'Test::More';
+build_requires 'Test::Exception';
 
 auto_install;
 WriteAll;
