@@ -14,6 +14,6 @@ is($code->y, 20);
 TODO:
 {
     local $TODO = "Perl (5.8 anyway) does not capture unused variables";
-    throws_ok { $code->x } qr/CODE\(0x[0-9a-fA-F]+\) does not close over \$x at/
+    lives_ok { $code->x }
 }
 
