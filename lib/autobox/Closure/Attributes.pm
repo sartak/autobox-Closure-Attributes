@@ -111,7 +111,7 @@ Shawn M Moore, C<< <sartak at gmail.com> >>
 
 L<autobox>, L<PadWalker>
 
-L</WHAT?> from Anton van Straaten: L<http://people.csail.mit.edu/gregs/ll1-discuss-archive-html/msg03277.html>
+The L</WHAT?> section is from Anton van Straaten: L<http://people.csail.mit.edu/gregs/ll1-discuss-archive-html/msg03277.html>
 
 =head1 BUGS
 
