@@ -5,10 +5,10 @@ use warnings;
 use parent 'autobox';
 
 sub import {
-    shift->SUPER::import(CODE => 'Closure::Attributes::Methods');
+    shift->SUPER::import(CODE => 'autobox::Closure::Attributes::Methods');
 }
 
-package Closure::Attributes::Methods;
+package autobox::Closure::Attributes::Methods;
 use PadWalker;
 
 sub AUTOLOAD {
