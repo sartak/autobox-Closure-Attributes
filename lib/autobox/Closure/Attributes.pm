@@ -32,11 +32,11 @@ autobox::Closure::Attributes - closures are objects are closures
 
 =head1 VERSION
 
-Version 0.02 released 21 Feb 08
+Version 0.03 released ???
 
 =cut
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 =head1 SYNOPSIS
 
