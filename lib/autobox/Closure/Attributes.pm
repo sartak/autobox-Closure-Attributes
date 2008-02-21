@@ -126,7 +126,7 @@ This happens because Perl optimizes away the capturing of unused variables.
 
     my $code = do {
         my @primes = qw(2 3 5 7);
-        sub { $primes[$_[0]] }
+        sub { $primes[ $_[0] ] }
     };
 
     $code->'@primes'(1) # Perl complains
@@ -134,7 +134,7 @@ This happens because Perl optimizes away the capturing of unused variables.
     my $method = '@primes';
     $code->$method(1) # autobox complains
 
-    $code->can('@primes')->($code, 1) # can ignores AUTOLOAD
+    $code->can('@primes')->($code, 1) # can complains
 
     $code->ARRAY_primes(1) # Sartak complains
 
