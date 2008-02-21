@@ -15,7 +15,7 @@ sub AUTOLOAD {
     my $code = shift;
     (my $attr = our $AUTOLOAD) =~ s/.*:://;
 
-    $attr = "\$$attr"; # this will become smarter soon
+    $attr = "\$$attr"; # this will become smarter some day
 
     my $closed_over = PadWalker::closed_over($code);
     exists $closed_over->{$attr}
@@ -81,9 +81,8 @@ moment, Anton became enlightened.
 This module uses powerful tools to give your closures accessors for each of the
 closed-over variables. You can get I<and> set them.
 
-For now, you can get I<only> the scalars that are closed over. Once I think of
-a better interface for getting and setting arrays and hashes I'll add that.
-C<< $code->'@foo' >> is the easy part.
+For now, you can get I<only> the scalars that are closed over. This is due to
+limitations in Perl (L<autobox> may eventually fix this).
 
 =head1 HOW DOES IT WORK?
 
