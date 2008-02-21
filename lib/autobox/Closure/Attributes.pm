@@ -92,8 +92,9 @@ L<autobox> lets you call methods on coderefs (or any other scalar).
 
 L<PadWalker> will let you see and change the closed-over variables of a coderef .
 
-C<AUTOLOAD> is really just an accessor. It's just harder to manipulate the
-"attributes" of a closure-based object than it is for hash-based objects.
+L<AUTOLOAD|perlsub/"Autoloading"> is really just an accessor. It's just harder
+to manipulate the "attributes" of a closure-based object than it is for
+hash-based objects.
 
 =head1 WHY WOULD YOU DO THIS?
 
