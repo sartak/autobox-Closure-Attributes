@@ -32,7 +32,7 @@ autobox::Closure::Attributes - closures are objects are closures
 
 =head1 VERSION
 
-Version 0.02 released ???
+Version 0.02 released 21 Feb 08
 
 =cut
 

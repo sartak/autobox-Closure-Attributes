@@ -1,6 +1,6 @@
 Revision history for autobox-Closure-Attributes
 
-0.02
+0.02    Thu Feb 21 03:09:40 2008
         Mistakenly put the AUTOLOAD in a non-namespace package.
         Fix SYNOPSIS.
         Tried to make $c->'@primes' work, but no dice.
