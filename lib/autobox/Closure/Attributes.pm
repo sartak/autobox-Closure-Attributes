@@ -124,6 +124,24 @@ The L</WHAT?> section is from Anton van Straaten: L<http://people.csail.mit.edu/
 
 This happens because Perl optimizes away the capturing of unused variables.
 
+    my $code = do {
+        my @primes = qw(2 3 5 7);
+        sub { $primes[$_[0]] }
+    };
+
+    $code->'@primes'(1) # Perl complains
+
+    my $method = '@primes';
+    $code->$method(1) # autobox complains
+
+    $code->can('@primes')->($code, 1) # can ignores AUTOLOAD
+
+    $code->ARRAY_primes(1) # Sartak complains
+
+    $code->autobox::Closure::Attributes::Array::primes(1) # user complains
+
+I just can't win here. Ideas?
+
 Please report any other bugs through RT: email
 C<bug-autobox-closure-attributes at rt.cpan.org>, or browse
 L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=autobox-Closure-Attributes>.
