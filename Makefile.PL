@@ -12,6 +12,5 @@ requires       'PadWalker';
 build_requires 'Test::More';
 build_requires 'Test::Exception';
 
-auto_install;
 WriteAll;
 
