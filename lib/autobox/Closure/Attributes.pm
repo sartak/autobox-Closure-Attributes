@@ -3,7 +3,7 @@ package autobox::Closure::Attributes;
 use strict;
 use warnings;
 use parent 'autobox';
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 sub import {
     shift->SUPER::import(CODE => 'autobox::Closure::Attributes::Methods');
@@ -45,7 +45,7 @@ autobox::Closure::Attributes - closures are objects are closures
 
 =head1 VERSION
 
-Version 0.03 released 16 May 08
+Version 0.04 released ???
 
 =head1 SYNOPSIS
 
