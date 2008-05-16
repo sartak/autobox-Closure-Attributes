@@ -6,7 +6,7 @@ name           'autobox-Closure-Attributes';
 all_from       'lib/autobox/Closure/Attributes.pm';
 
 requires       'parent';
-requires       'autobox';
+requires       'autobox' => '2.40';
 requires       'PadWalker';
 
 build_requires 'Test::More';
