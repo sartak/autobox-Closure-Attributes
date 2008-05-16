@@ -15,13 +15,22 @@ sub AUTOLOAD {
     my $code = shift;
     (my $attr = our $AUTOLOAD) =~ s/.*:://;
 
-    $attr = "\$$attr"; # this will become smarter some day
+    # we want the scalar unless the method name already a sigil
+    $attr = "\$$attr" unless $attr =~ /^[\$\@\%\&\*]/;
 
     my $closed_over = PadWalker::closed_over($code);
     exists $closed_over->{$attr}
         or Carp::croak "$code does not close over $attr";
 
-    return ${ $closed_over->{$attr} } = shift if @_;
+    my $ref = ref $closed_over->{$attr};
+
+    if (@_) {
+        return @{ $closed_over->{$attr} } = @_ if $ref eq 'ARRAY';
+        return %{ $closed_over->{$attr} } = @_ if $ref eq 'HASH';
+        return ${ $closed_over->{$attr} } = shift;
+    }
+
+    return $closed_over->{$attr} if $ref eq 'HASH' || $ref eq 'ARRAY';
     return ${ $closed_over->{$attr} };
 }
 
