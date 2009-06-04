@@ -1,4 +1,3 @@
-#!perl
 package autobox::Closure::Attributes;
 use strict;
 use warnings;
