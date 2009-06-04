@@ -2,7 +2,7 @@
 package autobox::Closure::Attributes;
 use strict;
 use warnings;
-use parent 'autobox';
+use base 'autobox';
 our $VERSION = '0.04';
 
 sub import {
