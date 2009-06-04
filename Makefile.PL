@@ -10,7 +10,6 @@ requires       'parent';
 requires       'autobox' => '2.40';
 requires       'PadWalker';
 
-build_requires 'Test::More';
 build_requires 'Test::Exception';
 
 WriteAll;
