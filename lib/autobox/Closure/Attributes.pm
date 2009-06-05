@@ -155,10 +155,6 @@ The L</WHAT?> section is from Anton van Straaten: L<http://people.csail.mit.edu/
 
 This happens because Perl optimizes away the capturing of unused variables.
 
-Please report any other bugs through RT: email
-C<bug-autobox-closure-attributes at rt.cpan.org>, or browse
-L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=autobox-Closure-Attributes>.
-
 =head1 COPYRIGHT AND LICENSE
 
 Copyright 2007-2009 Shawn M Moore.
