@@ -42,10 +42,6 @@ __END__
 
 autobox::Closure::Attributes - closures are objects are closures
 
-=head1 VERSION
-
-Version 0.04 released ???
-
 =head1 SYNOPSIS
 
     use autobox::Closure::Attributes;
