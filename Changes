@@ -1,6 +1,7 @@
 Revision history for autobox-Closure-Attributes
 
-0.04
+0.04    Sun Jun 14 15:16:06 2009
+        Modernize the dist
 
 0.03    Fri May 16 11:57:00 2008
         Thanks chocolateboy, for adding $code->$name!
