@@ -2,7 +2,7 @@ package autobox::Closure::Attributes;
 use strict;
 use warnings;
 use base 'autobox';
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 sub import {
     shift->SUPER::import(CODE => 'autobox::Closure::Attributes::Methods');
