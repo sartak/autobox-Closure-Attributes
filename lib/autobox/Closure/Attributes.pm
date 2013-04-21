@@ -122,6 +122,16 @@ You can also call invoke methods defined in the package the coderef was created 
 
 Note that the coderef returned by C<sub { }> was never C<bless>ed.
 
+If C<Foo> is used from a different file with C<use>, then you'll need this boilerplate
+in your C<Foo.pm>:
+
+        sub import {
+            my $class = shift;
+            $class->autobox::import(CODE => 'autobox::Closure::Attributes::Methods');
+        }
+
+That enables autoboxing of code references in the program that uses the C<Foo.pm> module.
+
 You can get and set arrays and hashes too, though it's a little more annoying:
 
     my $code = do {
