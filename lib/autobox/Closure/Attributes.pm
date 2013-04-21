@@ -2,6 +2,7 @@ package autobox::Closure::Attributes;
 use strict;
 use warnings;
 use base 'autobox';
+use B;
 our $VERSION = '0.05';
 
 sub import {
@@ -11,16 +12,25 @@ sub import {
 package autobox::Closure::Attributes::Methods;
 use PadWalker;
 
-sub AUTOLOAD {
+sub AUTOLOAD :lvalue {
     my $code = shift;
-    (my $attr = our $AUTOLOAD) =~ s/.*:://;
+    (my $method = our $AUTOLOAD) =~ s/.*:://;
 
     # we want the scalar unless the method name already a sigil
-    $attr = "\$$attr" unless $attr =~ /^[\$\@\%\&\*]/;
+    my $attr = $method  =~ /^[\$\@\%\&\*]/ ? $method : '$' . $method;
 
     my $closed_over = PadWalker::closed_over($code);
-    exists $closed_over->{$attr}
-        or Carp::croak "$code does not close over $attr";
+
+    # is there a method of that name in the package the coderef was created in?
+    # if so, run it.
+    # give methods priority over the variables we close over.
+    # XXX this isn't lvalue friendly, but sdw can't figure out how to make it be and not piss off old perls.
+    my $stash = B::svref_2object($code)->STASH->NAME;
+    if( $stash and $stash->can($method) ) {
+        return $stash->can($method)->( $code, @_ );
+    }
+
+    exists $closed_over->{$attr} or Carp::croak "$code does not close over $attr";
 
     my $ref = ref $closed_over->{$attr};
 
@@ -30,8 +40,8 @@ sub AUTOLOAD {
         return ${ $closed_over->{$attr} } = shift;
     }
 
-    return $closed_over->{$attr} if $ref eq 'HASH' || $ref eq 'ARRAY';
-    return ${ $closed_over->{$attr} };
+    $ref eq 'HASH' || $ref eq 'ARRAY' ? $closed_over->{$attr} : ${ $closed_over->{$attr} };
+
 }
 
 1;
@@ -41,6 +51,10 @@ __END__
 =head1 NAME
 
 autobox::Closure::Attributes - closures are objects are closures
+
+=head1 VERSION
+
+Version 0.03 released 16 May 08
 
 =head1 SYNOPSIS
 
@@ -84,6 +98,29 @@ moment, Anton became enlightened.
 
 This module uses powerful tools to give your closures accessors for each of the
 closed-over variables. You can get I<and> set them.
+
+You can also call invoke methods defined in the package the coderef was created in:
+    
+    {
+        package Foo;
+        sub new {
+            my $package = shift;
+            my $x = shift;
+            sub {
+                $x *= 2;
+            };
+        }
+        sub inc_x { my $self = shift; ++ $self->x }
+    };
+    
+    my $foo = Foo->new(10);
+    $foo->inc_x;     # $x is now 11; calls the method inc_x
+    $foo->x = 15;    #           15; assigns to $x
+    $foo->x(20);     #           20; assigns to $x
+    $foo->();        #           40; runs the sub { }
+    $foo->m;         # "CODE(0xDEADBEEF) does not close over $m"
+
+Note that the coderef returned by C<sub { }> was never C<bless>ed.
 
 You can get and set arrays and hashes too, though it's a little more annoying:
 
@@ -155,9 +192,20 @@ The L</WHAT?> section is from Anton van Straaten: L<http://people.csail.mit.edu/
 
 This happens because Perl optimizes away the capturing of unused variables.
 
+Perl 5.8.9, 5.10.0, 5.12.0, and other earlier versions fail on the package method examples with the error:
+Can't modify non-lvalue subroutine call at /home/knoppix/lib/perl5/site_perl/5.8.9/autobox/Closure/Attributes.pm line 37.
+Change the mutators to instead read:
+
+    sub inc_x :lvalue { ++ $_[0]->x; $_[0]->x }
+    sub inc_y :lvalue { ++ $_[0]->y; $_[0]->y }
+
+5.14 onward are smart enough to know that those accessors aren't actually called in lvalue context even though they're called from an lvalue method (C<AUTOLOAD>).
+
 =head1 COPYRIGHT AND LICENSE
 
 Copyright 2007-2009 Shawn M Moore.
+
+Copyright 2013 Scott Walters (scrottie).
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
