@@ -3,10 +3,14 @@ use strict;
 use warnings;
 use base 'autobox';
 use B;
+use Want;
 our $VERSION = '0.05';
+
+our @leaves;
 
 sub import {
     shift->SUPER::import(CODE => 'autobox::Closure::Attributes::Methods');
+    push @leaves, $^H{autobox_leave}; # keep them forever so their destructor never gets invoked?
 }
 
 package autobox::Closure::Attributes::Methods;
@@ -15,6 +19,7 @@ use PadWalker;
 sub AUTOLOAD :lvalue {
     my $code = shift;
     (my $method = our $AUTOLOAD) =~ s/.*:://;
+    return if $method eq 'DESTROY';
 
     # we want the scalar unless the method name already a sigil
     my $attr = $method  =~ /^[\$\@\%\&\*]/ ? $method : '$' . $method;
@@ -25,6 +30,7 @@ sub AUTOLOAD :lvalue {
     # if so, run it.
     # give methods priority over the variables we close over.
     # XXX this isn't lvalue friendly, but sdw can't figure out how to make it be and not piss off old perls.
+
     my $stash = B::svref_2object($code)->STASH->NAME;
     if( $stash and $stash->can($method) ) {
         return $stash->can($method)->( $code, @_ );
@@ -40,7 +46,7 @@ sub AUTOLOAD :lvalue {
         return ${ $closed_over->{$attr} } = shift;
     }
 
-    $ref eq 'HASH' || $ref eq 'ARRAY' ? $closed_over->{$attr} : ${ $closed_over->{$attr} };
+    $ref eq 'HASH' || $ref eq 'ARRAY' ? $closed_over->{$attr} : ${ $closed_over->{$attr} };  # lvalue friendly return
 
 }
 

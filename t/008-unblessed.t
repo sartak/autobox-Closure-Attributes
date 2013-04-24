@@ -10,7 +10,9 @@ use autobox::Closure::Attributes;
     sub new {
         my $x = 10;
         my $y = 100;
+        my $inc_x_2 = sub { ++ $x };
         sub {
+            $inc_x_2->() if @_;
             $x + $y;
         };
     }
@@ -28,4 +30,5 @@ is($foo->inc_y, 101);
 is($foo->inc_x, 12);
 is($foo->inc_y, 102);
 is($foo->(), 114);
+is($foo->inc_x_2->(), 13);
 
