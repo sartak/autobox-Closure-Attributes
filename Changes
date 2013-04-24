@@ -1,6 +1,9 @@
 Revision history for autobox-Closure-Attributes
 
-0.05
+0.05    Tue Apr 23 21:38:48 EDT 2013
+        Support lvalue assignments to closed over variables.
+        Attempt to resolve calls as calls to methods in the
+        package the coderef was created in.
 
 0.04    Sun Jun 14 15:16:06 2009
         Modernize the dist
