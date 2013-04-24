@@ -4,7 +4,7 @@ use warnings;
 use base 'autobox';
 use B;
 use Want;
-our $VERSION = '0.05';
+our $VERSION = '0.05_1';
 
 our @leaves;
 
