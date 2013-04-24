@@ -3,14 +3,10 @@ use strict;
 use warnings;
 use base 'autobox';
 use B;
-use Want;
 our $VERSION = '0.05_1';
-
-our @leaves;
 
 sub import {
     shift->SUPER::import(CODE => 'autobox::Closure::Attributes::Methods');
-    push @leaves, $^H{autobox_leave}; # keep them forever so their destructor never gets invoked?
 }
 
 package autobox::Closure::Attributes::Methods;

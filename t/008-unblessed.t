@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
-use Test::More tests => 8;
+use Test::More;
 use Test::Exception;
 use autobox::Closure::Attributes;
 
@@ -32,3 +32,4 @@ is($foo->inc_y, 102);
 is($foo->(), 114);
 is($foo->inc_x_2->(), 13);
 
+done_testing;
