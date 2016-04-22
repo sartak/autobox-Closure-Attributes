@@ -45,20 +45,22 @@ autobox::Closure::Attributes - closures are objects are closures
 =head1 SYNOPSIS
 
     use autobox::Closure::Attributes;
+    use feature 'say';
 
     sub accgen {
         my $n = shift;
-        return sub { $n += shift || 1 }
+        return sub { ++$n }
     }
 
     my $from_3 = accgen(3);
 
-    $from_3->n     # 3
-    $from_3->()    # 4
-    $from_3->n     # 4
-    $from_3->n(10) # 10
-    $from_3->()    # 11
-    $from_3->m     # "CODE(0xDEADBEEF) does not close over $m"
+    say $from_3->n;     # 3
+    say $from_3->();    # 4
+    say $from_3->n;     # 4
+    say $from_3->n(10); # 10
+    say $from_3->();    # 11
+    say $from_3->();    # 12
+    say $from_3->m;     # "CODE(0xDEADBEEF) does not close over $m"
 
 =head1 WHAT?
 
