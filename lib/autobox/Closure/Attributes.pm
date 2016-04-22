@@ -62,7 +62,7 @@ autobox::Closure::Attributes - closures are objects are closures
     say $from_3->();    # 12
     say $from_3->m;     # "CODE(0xDEADBEEF) does not close over $m"
 
-=head1 WHAT?
+=head1 DESCRIPTION
 
 The venerable master Qc Na was walking with his student, Anton. Hoping to
 prompt the master into a discussion, Anton said "Master, I have heard that
@@ -82,7 +82,7 @@ are truly a poor man's closures." Qc Na responded by hitting Anton with his
 stick, saying "When will you learn? Closures are a poor man's objects." At that
 moment, Anton became enlightened.
 
-=head1 DESCRIPTION
+=head1 IMPLEMENTATION
 
 This module uses powerful tools to give your closures accessors for each of the
 closed-over variables. You can get I<and> set them.
@@ -144,7 +144,7 @@ Shawn M Moore, C<sartak@gmail.com>
 
 L<autobox>, L<PadWalker>
 
-The L</WHAT?> section is from Anton van Straaten: L<http://people.csail.mit.edu/gregs/ll1-discuss-archive-html/msg03277.html>
+The L</DESCRIPTION> section is from Anton van Straaten: L<http://people.csail.mit.edu/gregs/ll1-discuss-archive-html/msg03277.html>
 
 =head1 BUGS
 
